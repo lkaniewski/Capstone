@@ -50,7 +50,7 @@ def isTrafficLight(num_trafficLight, max_score):
 
 
 def detect(filepath, file):
-
+    final_color = ""
     font = cv2.FONT_HERSHEY_SIMPLEX
     img = cv2.imread(filepath+file)
     cimg = img
@@ -90,6 +90,7 @@ def detect(filepath, file):
     r = 5
     bound = 4.0 / 10
     if r_circles is not None:
+        final_color = "red"
         r_circles = np.uint16(np.around(r_circles))
 
         for i in r_circles[0, :]:
@@ -111,6 +112,7 @@ def detect(filepath, file):
                 print('RED')
 
     if g_circles is not None:
+        final_color= "green"
         g_circles = np.uint16(np.around(g_circles))
 
         for i in g_circles[0, :]:
@@ -132,6 +134,7 @@ def detect(filepath, file):
                 print('GREEN')
 
     if y_circles is not None:
+        final_color = "yellow"
         y_circles = np.uint16(np.around(y_circles))
 
         for i in y_circles[0, :]:
@@ -151,13 +154,12 @@ def detect(filepath, file):
                 cv2.circle(masky, (i[0], i[1]), i[2]+30, (255, 255, 255), 2)
                 cv2.putText(cimg,'YELLOW',(i[0], i[1]), font, 1,(255,0,0),2,cv2.LINE_AA)
                 print('YELLOW')
-
     cv2.imshow('detected results', cimg)
     cv2.imwrite(path+'//result//'+file, cimg)
     # cv2.imshow('maskr', maskr)
     # cv2.imshow('maskg', maskg)
     # cv2.imshow('masky', masky)
-
+    print(final_color)
     #cv2.waitKey(0)
     cv2.destroyAllWindows()
 
